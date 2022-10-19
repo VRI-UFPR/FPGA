@@ -1,0 +1,13 @@
+net "clk_in"         loc = "V10";
+net "an_out<0>"      loc = "N16";
+net "an_out<1>"      loc = "N15";
+net "an_out<2>"      loc = "P18";
+net "an_out<3>"      loc = "P17";
+net "cat_out<0>"     loc = "T17";
+net "cat_out<1>"     loc = "T18";
+net "cat_out<2>"     loc = "U17";
+net "cat_out<3>"     loc = "U18";
+net "cat_out<4>"     loc = "M14";
+net "cat_out<5>"     loc = "N14";
+net "cat_out<6>"     loc = "L14";
+net "cat_out<7>"     loc = "M13";

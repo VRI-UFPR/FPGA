@@ -1,0 +1,5 @@
+## To Do
+- Conferir se funciona
+- Conferir comentários
+- Explicar sinais no patters.txt
+- Testar

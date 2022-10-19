@@ -1,0 +1,133 @@
+- Patterns
+Entity files    : camelCase.vhd
+Testbench files : camelCase_tb.vhd
+Port Names      : camelCase_in/out
+Signal Names    : camelCase_s
+Mux Names       : mux_<Relation>
+Type Names      : camelCase_t
+Constant Names  : camelCase_c
+
+- Entity Names
+Rule: <Abreviation of the file name>_e
+pc_e        - Program Counter
+im_e        - Instruction Memory
+rb_e        - Register Bank
+alu_e       - Arithmetical Logic Unit
+dm_e        - Data Memory
+uc_e        - Unit Control
+dpy_e       - 7 segment display
+clkDiv_e    - Clock divisor
+
+- MICOW ports
+clk_in      - Clock generated from the FPGA board
+cat_out     - Cathodes from the display
+an_out      - Anodes from the display
+
+- MICOW signals
+clk_s         - Divided clock used in the sequential circuits
+pcPlus_s      - Value to be added with the current pc address
+pcCurr_s      - Current pc address
+pcNext_s      - Address of the next instruction
+ins_s         - Instruction signal
+rbWr_s        - Register Bank write signal
+rbS_s         - One of the addr to be read in the Register Bank
+rbT_s         - Other address to be read in the Register Bank
+rbD_s         - Address of the register to be written
+rbWrData_s    - Data that will be written in the Register Bank
+rbSOutData_s  - Data read from the rbS_s address
+rbTOutData_s  - Data read from the rbT_s address
+rtOrImm_s     - mux_alu signal that is rt or the extended imm
+aluOp_s       - Control signal for the ALU operation
+aluResult_s   - Result from the ALU
+zero_s        - If aluResult_s is zero, zero_s goes to ONE
+memRd_s       - Enable read operation in data memory
+memWr_s       - Enable write operation in data memory
+memOutData_s  - Data read from the data memory
+op_s          - Operation signal
+imm_s         - Control signal for the mux_ALU
+bne_s         - Branch operation signal
+branch_s      - Set if the branch should be taken or not
+
+- Clk Div ports
+clk_in        - Clk from the FPGA board
+clk_out       - Divided clk
+
+- Clk Div signals
+clkTmp_s      - Temporary clk, out signal cannot be used as internal input signal
+div_s         - Acumulator for the clk from the FPGA board
+
+- UC ports
+op_in
+rbWr_out
+imm_out
+bne_out
+aluOp_out
+memWr_out
+memRd_out
+
+- PC ports
+clk_in        - Divided clock
+pcCurr_in     - Current pc addr
+pcPlus_in     - Value to be added with the current pc addr
+pcNext_out    - Addr of the nest instruction
+
+- IM ports
+addr_in       - Addr to be read
+ins_out       - Instruction read
+
+- RB ports
+clkDpy_in     - Clock to be used with the display
+clk_in        - Divided clock
+rbS_in
+rbT_in
+rbD_in
+rbWr_in
+rbWrData_in
+rbSOutData_out
+rbTOutData_out
+an_out
+cat_out
+
+- RB signals
+dpyData_s     - Value to be displayed
+regData_s     - Array that represents the memory for the registers
+
+- RB type
+dataArray_t
+
+- DPY ports
+clk_in
+dpyData_in
+an_out
+cat_out
+
+- DPY signals
+reg
+div_s
+an_s
+
+- ALU ports
+aluOp_in
+aluFirst_in
+aluSecond_in
+zero_out
+result_out
+
+- ALU signals
+result_s       - Temporary result for the ALU
+
+- DM ports
+clk_in
+memRd_in
+memWr_in
+memData_in
+memAddr_in
+memData_out
+
+- DM signal
+memData_s      - array that represents the data memory
+
+- DM type
+dataArray_t
+
+
