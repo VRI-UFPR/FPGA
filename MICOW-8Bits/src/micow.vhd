@@ -41,10 +41,10 @@ architecture Behavior of micow_e is
   component rb_e
     port (clkDpy_in, clk_in, rbWr_in             : in  std_logic; 
           rbS_in, rbT_in, rbD_in                 : in  std_logic_vector(1 downto 0);
-			 rbWrData_in                            : in  std_logic_vector(3 downto 0);
+          rbWrData_in                            : in  std_logic_vector(3 downto 0);
           rbSOutData_out, rbTOutData_out         : out std_logic_vector(3 downto 0);
           an_out                                 : out std_logic_vector(3 downto 0); 
-			 cat_out                                : out std_logic_vector(7 downto 0)); 
+          cat_out                                : out std_logic_vector(7 downto 0)); 
   end component;
 
   -- Arithimetic Logic Unit
@@ -69,9 +69,9 @@ architecture Behavior of micow_e is
   signal clk_s                                   : std_logic;
 
   -- Unit control signals
-  signal rbWr_s, aluOp_s,imm_s, bne_s            : std_logic; 
+  signal rbWr_s, aluOp_s, imm_s, bne_s           : std_logic; 
   signal memRd_s, memWr_s                        : std_logic;
-  signal op_s												 : std_logic_vector(1 downto 0);
+  signal op_s									 : std_logic_vector(1 downto 0);
   signal ins_s                                   : std_logic_vector(7 downto 0); 
 
   -- PC signals

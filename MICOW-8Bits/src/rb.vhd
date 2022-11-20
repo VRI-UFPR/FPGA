@@ -5,10 +5,10 @@ use ieee.numeric_std.all;
 entity rb_e is
   port (clkDpy_in, clk_in, rbWr_in             : in  std_logic; 
         rbS_in, rbT_in, rbD_in                 : in  std_logic_vector(1 downto 0);
-		  rbWrData_in                            : in  std_logic_vector(3 downto 0);
+		rbWrData_in                            : in  std_logic_vector(3 downto 0);
         rbSOutData_out, rbTOutData_out         : out std_logic_vector(3 downto 0);
         an_out                                 : out std_logic_vector(3 downto 0); 
-	     cat_out                                : out std_logic_vector(7 downto 0)); 
+	    cat_out                                : out std_logic_vector(7 downto 0)); 
 end rb_e;
 
 architecture Behavior of rb_e is
@@ -17,7 +17,7 @@ architecture Behavior of rb_e is
     port(clk_in                                : in  std_logic;	 
          dpyData_in                            : in  std_logic_vector(15 downto 0);
          an_out                                : out std_logic_vector(3 downto 0); 
-			cat_out                               : out std_logic_vector(7 downto 0)); 
+		 cat_out                               : out std_logic_vector(7 downto 0)); 
   end component;
 
   -- 4 registers with 4 bits word 
