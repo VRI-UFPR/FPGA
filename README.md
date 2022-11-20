@@ -1,3 +1,9 @@
+<img
+src = "micow.jpg"
+alt = "Alt text"
+title = "Micow processor schema"
+style="display: inline-block; margin: 0 auto; max-width: 300px">
+
 # FPGA
 FPGA projects developed by students of the VRI laboratory at the Federal University of Paraná
 
