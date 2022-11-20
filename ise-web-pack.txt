@@ -1,0 +1,47 @@
+- Download from website
+    - https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vivado-design-tools/archive-ise.html
+    - 14.7 -> it has 4 parts
+
+- Download yay and pamac(not required, GUI)
+
+- Packages:
+    - ncurses5-compat-libs(AUR)
+    - libstdc++5(AUR)
+    - fxloaid(AUR)
+    - digilent.adept.runtime(AUR)
+    - digilent.adept.utilities(AUR)
+    - openmotif
+    - xorg-fonts-75dpi
+    - xorg-fonts-100dpi
+
+- Default shell
+    - ls -l /usr/bin/sh
+        if not lrwxrwxrwx 1 root root 15 13 Mar 06:47 /usr/bin/sh -> bash
+        then # ln -sfT bash /usr/bin/sh
+
+- Extract
+    -mkdir xilinx; mv Xilinx_* xilinx; cd xilinx; tar -xvf Xilinx_ISE_DS_Lin_14.7_1015_1.tar
+
+- If in KDE then: unset QT_PLUGIN_PATH
+
+- Install
+    - sudo ./xsetup
+    - make sure /opt/Xilinx can be written
+    - uncheck "Install Cable Drivers"
+
+- Creating desktop entry
+    - sudo vim /usr/share/applications/ise.desktop
+    - #!/usr/bin/env xdg-open
+    [Desktop Entry]
+    Version=1.0
+    Type=Application
+    Name=Xilinx ISE
+    Exec=sh -c "unset LANG && unset QT_PLUGIN_PATH && source /opt/Xilinx/14.7/ISE_DS/settings64.sh && ise"
+    Icon=/opt/Xilinx/14.7/ISE_DS/ISE/data/images/pn-ise.png
+    Categories=Development;
+    Comment=Xilinx ISE
+    StartupWMClass=_pn
+    - cp /usr/share/applications/ise.desktop ~/Desktop
+
+- License
+    - https://www.xilinx.com/getlicense/ (ISE WEBPACK)
