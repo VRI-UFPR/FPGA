@@ -1,6 +1,6 @@
-library IEEE;
-use IEEE.std_logic_1164.all;
-use IEEE.std_logic_unsigned.all;
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_unsigned.all;
 
 entity clkDiv_e is
   port(clk_in      : in  std_logic;

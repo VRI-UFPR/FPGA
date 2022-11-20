@@ -1,5 +1,6 @@
-library IEEE;
-use IEEE.std_logic_1164.all;
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_unsigned.all;
 
 entity pc_e is
   port(clk_in                                  : in  std_logic;
@@ -16,7 +17,7 @@ begin
   begin
   
     if rising_edge(clk_in) then
-	   pcNext_out <= pcCurr_in + pcSoma_in;
+	   pcNext_out <= pcCurr_in + pcPlus_in;
 	else
 	   pcNext_out <= pcCurr_in;
 	end if;

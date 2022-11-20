@@ -1,15 +1,16 @@
-library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
+library ieee;
+use ieee.std_logic_1164.ALL;
 
 entity dpy_e is
   port(clk_in                               : in  std_logic;	 
        dpyData_in                           : in  std_logic_vector(15 downto 0);
-       an_out, cat_out                      : out std_logic_vector(3 downto 0));
+       an_out                               : out std_logic_vector(3 downto 0); 
+	    cat_out                              : out std_logic_vector(7 downto 0)); 
 end dpy_e;
 
 architecture Behavior of dpy_e is
 
-  signal reg                                : std_logic_vector(3 downto 0); 
+  signal data_s                             : std_logic_vector(3 downto 0); 
   signal div_s                              : natural range 0 to 100000 := 0;
   signal an_s                               : natural range 0 to 4      := 0;
 
@@ -44,19 +45,20 @@ begin
 	  when 0      => an_out  <= "1110"; -- Right most display
 	                 data_s  <= dpyData_in(3 downto 0);
 
-      when 1      => an_out  <= "1101";
-                     data_s  <= dpyData_in(7 downto 4);
+     when 1      => an_out  <= "1101";
+                    data_s  <= dpyData_in(7 downto 4);
 
 	  when 2      => an_out  <= "1011";
-                     data_s  <= dpyData_in(11 downto 8);
+                    data_s  <= dpyData_in(11 downto 8);
 
 	  when 3      => an_out  <= "0111"; -- Left most display
 	                 data_s  <= dpyData_in(15 downto 12);
 
-      when others => an_out  <= "1111"; -- Turn off all of the displays
-                     data_s  <= "0000" 
-   end case;
-	 
+     when others => an_out  <= "1111"; -- Turn off all of the displays
+                    data_s  <= "0000"; 
+    end case;
+  end process;
+ 
   -- Select each segments to turn on and off for each number
   process(data_s)
   begin
@@ -71,13 +73,13 @@ begin
       when "0111" => cat_out <= "11111000"; --  7    
             
       when "1111" => cat_out <= "01111001"; -- -1
-	  when "1110" => cat_out <= "00100100"; -- -2
-	  when "1101" => cat_out <= "00110000"; -- -3
-	  when "1100" => cat_out <= "00011001"; -- -4
-	  when "1011" => cat_out <= "00010010"; -- -5
-	  when "1010" => cat_out <= "00000010"; -- -6
-	  when "1001" => cat_out <= "01111000"; -- -7
-	  when "1000" => cat_out <= "00000000"; -- -8
+	   when "1110" => cat_out <= "00100100"; -- -2
+	   when "1101" => cat_out <= "00110000"; -- -3
+	   when "1100" => cat_out <= "00011001"; -- -4
+	   when "1011" => cat_out <= "00010010"; -- -5
+	   when "1010" => cat_out <= "00000010"; -- -6
+	   when "1001" => cat_out <= "01111000"; -- -7
+	   when "1000" => cat_out <= "00000000"; -- -8
 
       when others => cat_out <= "11111111"; -- Turn off
     end case;

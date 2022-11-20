@@ -1,5 +1,6 @@
-library IEEE;
-use IEEE.std_logic_1164.ALL;
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_signed.all;
 
 entity alu_e is
   port(aluOp_in                                : in  std_logic;

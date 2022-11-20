@@ -1,16 +1,16 @@
-library IEEE;
-use IEEE.std_logic_1164.all;
-use IEEE.numeric_std.all;
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
 
 entity im_e is
   port(addr_in                                 : in  std_logic_vector(3 downto 0);
-       ins_out                                 : out std_logic_vector(7 downto 0)));
+       ins_out                                 : out std_logic_vector(7 downto 0));
 end im_e;
 
 architecture Behavioral of im_e is
   type dataArray_t is array (0 to 15)          of std_logic_vector(7 downto 0);
   
-  constant memData_c : memArray_t := (
+  constant memData_c : dataArray_t := (
   -- Add the desired instructions here
  
   -- Initial settings

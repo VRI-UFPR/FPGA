@@ -1,5 +1,5 @@
-library IEEE;
-use IEEE.std_logic_1164.all;
+library ieee;
+use ieee.std_logic_1164.all;
 
 entity micow_e is
   port(clk_in                                    : in  std_logic;
@@ -7,14 +7,14 @@ entity micow_e is
        cat_out                                   : out std_logic_vector(7 downto 0));
 end micow_e;
 
-architecture Behavior of micow is
+architecture Behavior of micow_e is
 
 ------------------------------- Declare the components --------------------------------
   
   -- Clock Divisor
   component clkDiv_e
     port(clk_in                                  : in  std_logic;
-         clk_out                                 : out std_logic));
+         clk_out                                 : out std_logic);
   end component;
   
   -- Unit Control
@@ -39,11 +39,12 @@ architecture Behavior of micow is
 
   -- Register Bank
   component rb_e
-    port (clkDpy_in, clk_in                      : in  std_logic; 
-          rbS_in, rbT_in, rbD_in                 : in  std_logic_vector(3 downto 0);
-          rbWr_in, rbWrData_in                   : in  std_logic_vector(3 downto 0); 
-          rbSOutData_out, rbTOutData_out         : out std_logic_vector(3 downto 0));
-          an_out, cat_out                        : out std_logic_vector(7 downto 0)); 
+    port (clkDpy_in, clk_in, rbWr_in             : in  std_logic; 
+          rbS_in, rbT_in, rbD_in                 : in  std_logic_vector(1 downto 0);
+			 rbWrData_in                            : in  std_logic_vector(3 downto 0);
+          rbSOutData_out, rbTOutData_out         : out std_logic_vector(3 downto 0);
+          an_out                                 : out std_logic_vector(3 downto 0); 
+			 cat_out                                : out std_logic_vector(7 downto 0)); 
   end component;
 
   -- Arithimetic Logic Unit
@@ -56,19 +57,21 @@ architecture Behavior of micow is
 
   -- Data Memory
   component dm_e
-    port(clk_in, memRead_in, memWrite_in         : in  std_logic;
+    port(clk_in, memRd_in, memWr_in              : in  std_logic;
          memData_in, memAddr_in                  : in  std_logic_vector(3 downto 0);
          memData_out                             : out std_logic_vector(3 downto 0));
   end component;
 
    
 --------------------------------- Declare the signals ---------------------------------
+ 
   -- Clock divider signals
   signal clk_s                                   : std_logic;
 
   -- Unit control signals
-  signal rbWr_s, aluOp_s,op_s, imm_s, bne_s      : std_logic; 
-  signal memRead_s, memWrite_s                   : std_logic;
+  signal rbWr_s, aluOp_s,imm_s, bne_s            : std_logic; 
+  signal memRd_s, memWr_s                        : std_logic;
+  signal op_s												 : std_logic_vector(1 downto 0);
   signal ins_s                                   : std_logic_vector(7 downto 0); 
 
   -- PC signals
@@ -77,12 +80,11 @@ architecture Behavior of micow is
   
   -- Register bank signals
   signal rbS_s, rbT_s, rbD_s                     : std_logic_vector(1 downto 0);
-  signal rbSOutData_s, rbTOutData_s              : std_logic_vector(3 downto 0);
-  signal rbWrData_s                              : std_logic_vector(3 downto 0);
+  signal rbSOutData_s, rbTOutData_s, rbWrData_s  : std_logic_vector(3 downto 0);
 
   -- Alu signals
-  signal zero_s, rtOrimm_s                       : std_logic;
-  signal aluResult_s                             : std_logic_vector(3 downto 0);
+  signal zero_s                                  : std_logic;
+  signal aluResult_s, rtOrimm_s                  : std_logic_vector(3 downto 0);
 
   -- Data memory signals
   signal memOutData_s                            : std_logic_vector(3 downto 0); 
@@ -115,41 +117,40 @@ begin
 
   -- Mux to set the register to be written:
   -- when op is lw, it's the rt, otherwhise, it's the rd 
-  mux_rbD_s:  rbD_s       <= rbT_s               when memRead_s = '1' else
+  mux_rbD_s:  rbD_s       <= rbT_s               when memRd_s = '1' else
                              ins_s(1 downto 0);  
 							
   -- Mux to set the value for the alu:
   -- when the imm signal is activate select the extended imm,
   -- otherwhise, select the value in the rt register
   mux_alu:    rtOrimm_s   <= rbTOutData_s        when imm_s = '0' else
-                             bne_s&bne_s&rd_in   when imm_s = '1';
+                             bne_s&bne_s&rbD_s   when imm_s = '1';
   
   -- Mux to set the data to be written in the RB:
   -- when the memRead signal is activate select the data read from the memory,
   -- otherwise, select the result from the alu 
-  mux_dm:     rbWrData_s  <= memOutData_s        when memRead_s = '1' else
+  mux_dm:     rbWrData_s  <= memOutData_s        when memRd_s = '1' else
                              aluResult_s;
  
   
 -------------------------------- The important part -----------------------------------
 
   -- Divide the clk from the FPGA board to the desired value
-  clock:  clkDiv_e  port map (clk_in, clk);
+  clock:  clkDiv_e  port map (clk_in, clk_s);
 
   -- Generate the necessary control signals 
   UC:     uc_e      port map (op_s, rbWr_s, imm_s, bne_s, 
-                              aluOp_s, memWrite_s, memRead_s);
+                              aluOp_s, memWr_s, memRd_s);
   
   -- Set the addr to the next instruction
-  PC:     pc_e      port map (clk, pcCurr_s, pcPlus_s, pcNext_s);
+  PC:     pc_e      port map (clk_s, pcCurr_s, pcPlus_s, pcNext_s);
  
   -- Read the next instruction
   IM:     im_e      port map (pcCurr_s, ins_s);     
   
   -- Read and write the values in the register bank
-  RB:     rb_e      port map (clk_in, clk, 
-                              rbS_s, rbT_s, rbD_s, 
-                              rbWr_s, rbWrData_s, 
+  RB:     rb_e      port map (clk_in, clk_s, rbWr_s, 
+                              rbS_s, rbT_s, rbD_s, rbWrData_s, 
                               rbSOutData_s, rbTOutData_s, 
                               an_out, cat_out); 
                           
@@ -158,7 +159,7 @@ begin
                               zero_s, aluResult_s);
   
   -- Write or read data in the data memory when apropriate
-  DM:     dm_e      port map (clk, memRd_s, memWr_s, 
+  DM:     dm_e      port map (clk_s, memRd_s, memWr_s, 
                               aluResult_s, rbTOutData_s, memOutData_s); 
 end Behavior;
 

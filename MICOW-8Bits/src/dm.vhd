@@ -1,9 +1,9 @@
-library IEEE;
-use IEEE.std_logic_1164.all;
-use IEEE.numeric_std.all;
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
 
 entity dm_e is
-  port(clk_in, memRead_in, memWrite_in         : in  std_logic;
+  port(clk_in, memRd_in, memWr_in              : in  std_logic;
        memData_in, memAddr_in                  : in  std_logic_vector(3 downto 0);
        memData_out                             : out std_logic_vector(3 downto 0));
 end dm_e;
@@ -43,7 +43,7 @@ begin
   process(memAddr_in, memData_in, clk_in, memWr_in)
   begin
 
-    if rising_edge(clk_in) and memWr = '1' then
+    if rising_edge(clk_in) and memWr_in = '1' then
       memData_s(to_integer(unsigned(memAddr_in))) <= memData_in;
     end if;
      
