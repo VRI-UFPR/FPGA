@@ -1,5 +1,5 @@
 <img
-src = "micow.jpg"
+src = "/MICOW-8Bits/micow.jpg"
 alt = "Alt text"
 title = "Micow processor schema"
 style="display: inline-block; margin: 0 auto; max-width: 300px">
