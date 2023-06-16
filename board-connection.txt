@@ -1,0 +1,15 @@
+Note: This procedure only works for 64 bit linux systems, for other systems check their documentation
+Note2: It will be used the Digilent Adept software for a connection with a nexys3 board
+
+Step 1: Software Download
+Digilent: https://digilent.com/reference/software/adept/start
+By acessing Digilent site, install the softwares runtime and utilities by clicking Download now. An email will be necessary.
+
+Step2: Software Instalation
+For .tar.gz decompress the files and run the file install.sh with superuser privileges.
+
+step3: Test the board
+Connect the board with the computer with a USB cable, open the terminal and type `djtgcfg enum`.
+If there was no errors the boards data will be displayed.
+
+Video tutorial: https://www.youtube.com/watch?v=l0UMqmZf6rs
