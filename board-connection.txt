@@ -12,4 +12,5 @@ step3: Test the board
 Connect the board with the computer with a USB cable, open the terminal and type `djtgcfg enum`.
 If there was no errors the boards data will be displayed.
 
-Video tutorial: https://www.youtube.com/watch?v=l0UMqmZf6rs
+- djtgcfg options: https://techoverflow.net/2012/10/05/how-to-program-nexys3-fpga-board-on-linux-using-digilent-adept-software-a-guide-for-beginners/
+- Tutorial video: https://www.youtube.com/watch?v=l0UMqmZf6rs
