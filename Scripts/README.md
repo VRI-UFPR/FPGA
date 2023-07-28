@@ -6,6 +6,7 @@
 * Mudar o scipt inicial para chamar o verify python
 * Deixar o script do digilent mais legivel
 * Adicionar um docker para o mint
+* Talvez a ideia de nao printar os erros de problema
 
 # Como contribuir
 * Baixe o docker
